@@ -5,25 +5,26 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 public class DVDPlayer {
-	@Autowired
-	private DigitalVideoDisc digitalVideoDisc;
+	
+	private DigitalVideoDisc dvd;
 	
 	public DVDPlayer() {
 		
 	}
-	public DVDPlayer(DigitalVideoDisc digitalVideoDisc) {
-		this.digitalVideoDisc = digitalVideoDisc;
+	
+	public DVDPlayer(DigitalVideoDisc dvd) {
+		this.dvd = dvd;
 	}
 	
 	public DigitalVideoDisc getDigitalVideoDisc() {
-		return digitalVideoDisc;
+		return dvd;
 	}
 
-	public void setDigitalVideoDisc(DigitalVideoDisc digitalVideoDisc) {
-		this.digitalVideoDisc = digitalVideoDisc;
+	public void setDigitalVideoDisc(DigitalVideoDisc dvd) {
+		this.dvd = dvd;
 	}
 	
 	public void play() {
-		digitalVideoDisc.play();
+		dvd.play();
 	}
 }

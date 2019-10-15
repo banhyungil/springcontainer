@@ -3,6 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -13,10 +16,68 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 	
 	<context:annotation-config />
+	
+	<!-- 01. 간단한 빈 설정 -->
+	<bean class="kr.co.itcen.springcontainer.videosystem.Ironman"></bean>
+
+	<!-- 02. 설정된 빈에 아이디 부여하기 -->
 	<bean id="joker" class="kr.co.itcen.springcontainer.videosystem.BlankDisc">
 		<property name="title" value="Joker"></property>
 		<property name="studio" value="DC"></property>
 	</bean>
+	
+	<!-- 01. 생성자를 통해 빈주입 -->
+	<bean id="dvdPlayer1" class="kr.co.itcen.springcontainer.videosystem.DVDPlayer">
+		<constructor-arg ref="joker"></constructor-arg>
+	</bean>
+	
+	<!-- 02. 생성자를 통해 빈주입: c-namespace의 argument name을 사용
+	<ref_col_name>-ref 형태로 주입
+	 -->
+	<bean id="dvdPlayer2" 
+	class="kr.co.itcen.springcontainer.videosystem.DVDPlayer"
+	c:dvd-ref="joker"/>
+	
+	<!-- 03. 생성자를 통해 빈주입02: c-namespace의 argument name을 사용
+	<_(arg_index)>-ref 형태로 주입
+	 -->
+	<bean id="dvdPlayer3" 
+	class="kr.co.itcen.springcontainer.videosystem.DVDPlayer"
+	c:_0-ref="joker"/>
+	
+	<!-- 04-1. 리터럴을 생성자를 통해 주입-->
+	<bean id="conJoker" class="kr.co.itcen.springcontainer.videosystem.BlankDisc">
+		<constructor-arg name="studio" value="DC"/>
+		<constructor-arg name="title" value="joker"/>		
+	</bean>
+	
+	<!-- 04-2. 리터럴을 생성자를 통해 주입
+	c:<arg_name>으로 사용
+	-->
+	<bean id="copyJoker" 
+	class="kr.co.itcen.springcontainer.videosystem.BlankDisc"
+	c:title="Avengers Endgame"
+	c:studio="MARVEL"/>
+
+	<!-- 04-3. 리터럴을 생성자를 통해 주입
+	c:<arg_index>
+	-->
+	<bean id="copyJoker2" 
+	class="kr.co.itcen.springcontainer.videosystem.BlankDisc"
+	c:_1="MARVEL"
+	c:_0="Avengers Endgame"/>
+	
+	<util:list id="pBlankDIskList">
+		<value>안녕</value>
+		<value>util로 만들었다잉</value>
+	</util:list>
+	<!-- p namespace를 이용한 주입 -->
+	<bean id="pBlankDisk"
+	class="kr.co.itcen.springcontainer.videosystem.BlankDisc"
+	p:title="pBlankDiskTitle"
+	p:studio="pBlankDiskStudio"
+	p:actors-ref="pBlankDIskList"
+	/>
 	<!-- <context:component-scan base-package="kr.co.itcen.springcontainer.soundsystem">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
 	</context:component-scan> -->

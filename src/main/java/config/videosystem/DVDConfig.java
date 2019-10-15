@@ -12,13 +12,13 @@ import kr.co.itcen.springcontainer.videosystem.DigitalVideoDisc;
 @Configuration
 public class DVDConfig {
 	
-	@Bean
+	@Bean("avengers")
 	public DigitalVideoDisc avengers() {
 		return new Avengers();
 	}
 	
 	@Bean("joker")
-	public BlankDisc blankDisc() {
+	public DigitalVideoDisc blankDisc() {
 		BlankDisc blankDisc = new BlankDisc();
 		blankDisc.setTitle("joker");
 		blankDisc.setStudio("DC");
